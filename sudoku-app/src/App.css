@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+}
+
+.Buttons {
+  padding-top: 0.5em;
+  width: 16em;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button{
+  border-style: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+}
+
+.red{
+  background-color: rgb(248, 91, 91);
+}
+
+.blue{
+  background-color: rgb(70, 70, 240);
+}
+
+.green{
+  background-color: rgb(130, 224, 130);
+}
