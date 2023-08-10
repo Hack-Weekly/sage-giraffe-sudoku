@@ -1,0 +1,7 @@
+.sudoku-cell{
+    border: 1px solid rgb(49, 43, 51);
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    font-size: 50px;
+}
