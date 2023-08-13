@@ -1,11 +1,11 @@
-import { sudokoSolver } from "./SudokuSolver.js";
+import { sudokuSolver } from "./SudokuSolver.js";
 
 export default class Sudoku {
     constructor(N, K) {
         this.N = N;
         this.K = K;
         this.SRN = Math.floor(Math.sqrt(N))
-        this.mat = Array(N).fill().map(() => Array(N).fill("."))
+        this.mat = Array(N).fill().map(() => Array(N).fill(""))
     }
 
     fillValues() {
@@ -40,7 +40,7 @@ export default class Sudoku {
         let currentIndex = array.length, randomIndex;
 
         // While there remain elements to shuffle.
-        while (currentIndex != 0) {
+        while (currentIndex !== 0) {
 
             // Pick a remaining element.
             randomIndex = Math.floor(Math.random() * currentIndex);
@@ -55,7 +55,7 @@ export default class Sudoku {
     }
 
     solveBoard() {
-        sudokoSolver(this.mat)
+        sudokuSolver(this.mat)
     }
 
     removeKDigits() {
@@ -63,7 +63,7 @@ export default class Sudoku {
         let nonEmptyCells = [];
         for (let i = 0; i < this.N; i++) {
             for (let j = 0; j < this.N; j++) {
-                if (this.mat[i][j] !== ".") {
+                if (this.mat[i][j] !== "") {
                     nonEmptyCells.push([i, j]);
                 }
             }
@@ -72,7 +72,7 @@ export default class Sudoku {
         while (count !== 0 && nonEmptyCells.length > 0) {
             let randomIndex = Math.floor(Math.random() * nonEmptyCells.length);
             let [row, col] = nonEmptyCells[randomIndex];
-            this.mat[row][col] = ".";
+            this.mat[row][col] = "";
             // swap cells then pop at end for fastest running time
             [nonEmptyCells[randomIndex], nonEmptyCells[nonEmptyCells.length - 1]] = [nonEmptyCells[nonEmptyCells.length - 1], nonEmptyCells[randomIndex]];
             nonEmptyCells.pop();

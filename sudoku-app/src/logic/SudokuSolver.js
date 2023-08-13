@@ -1,45 +1,3 @@
-function test1(){
-    const board =
-        [["5","3",".",".","7",".",".",".","."]
-            ,["6",".",".","1","9","5",".",".","."]
-            ,[".","9","8",".",".",".",".","6","."]
-            ,["8",".",".",".","6",".",".",".","3"]
-            ,["4",".",".","8",".","3",".",".","1"]
-            ,["7",".",".",".","2",".",".",".","6"]
-            ,[".","6",".",".",".",".","2","8","."]
-            ,[".",".",".","4","1","9",".",".","5"]
-            ,[".",".",".",".","8",".",".","7","9"]]
-    console.log("test expected: true and it returned:" + sudokoSolver(board));
-}
-
-function test2(){
-    const board =
-        [["8","3",".",".","7",".",".",".","."]
-            ,["6",".",".","1","9","5",".",".","."]
-            ,[".","9","8",".",".",".",".","6","."]
-            ,["8",".",".",".","6",".",".",".","3"]
-            ,["4",".",".","8",".","3",".",".","1"]
-            ,["7",".",".",".","2",".",".",".","6"]
-            ,[".","6",".",".",".",".","2","8","."]
-            ,[".",".",".","4","1","9",".",".","5"]
-            ,[".",".",".",".","8",".",".","7","9"]]
-    console.log("test expected: false and it returned:" + sudokoSolver(board));
-}
-
-function test3(){
-    const board= [
-        [".",".","9","7","4","8",".",".","."],
-        ["7",".",".",".",".",".",".",".","."],
-        [".","2",".","1",".","9",".",".","."],
-        [".",".","7",".",".",".","2","4","."],
-        [".","6","4",".","1",".","5","9","."],
-        [".","9","8",".",".",".","3",".","."],
-        [".",".",".","8",".","3",".","2","."],
-        [".",".",".",".",".",".",".",".","6"],
-        [".",".",".","2","7","5","9",".","."]
-    ]
-    console.log("test expected: true and it returned:" + sudokoSolver(board));
-}
 /**
  * determines if the current solution is valid.
  */
@@ -57,7 +15,7 @@ function isValid(board, row, col, k) {
 /**
  * determines if the current grid is empty.
  */
-const isEmpty = grid => grid === '.';
+const isEmpty = grid => grid === '';
 
 /**
  * Solves the puzzle. This algorithm uses backtracking.
@@ -65,7 +23,7 @@ const isEmpty = grid => grid === '.';
  * @returns {boolean} returns a boolean that determines if
  * the puzzle was solved.
  */
-export function sudokoSolver(data) {
+export function sudokuSolver(data) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (!isEmpty(data[row][col])) continue;
@@ -74,10 +32,10 @@ export function sudokoSolver(data) {
                 if (!isValid(data, row, col, k)) continue;
 
                 data[row][col] = `${k}`;
-                if (sudokoSolver(data)) {
+                if (sudokuSolver(data)) {
                     return true;
                 } else {
-                    data[row][col] = '.';
+                    data[row][col] = '';
                 }
             }
             return false;
@@ -86,6 +44,3 @@ export function sudokoSolver(data) {
     return true;
 }
 
-test1()
-test2()
-test3()
