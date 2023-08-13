@@ -65,7 +65,7 @@ const isEmpty = grid => grid === '.';
  * @returns {boolean} returns a boolean that determines if
  * the puzzle was solved.
  */
-function sudokoSolver(data) {
+export function sudokoSolver(data) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (!isEmpty(data[row][col])) continue;

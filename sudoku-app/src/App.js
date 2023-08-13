@@ -1,6 +1,6 @@
 import './App.css';
-import SudokuGrid from './SudokuGrid';
-import MyComponent from './theme';
+import SudokuGrid from './SudokuGrid.js';
+import MyComponent from './theme.js';
 
 function App() {
   return (
