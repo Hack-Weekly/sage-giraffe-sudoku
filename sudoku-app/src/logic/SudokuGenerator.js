@@ -1,6 +1,6 @@
 import { sudokoSolver } from "./SudokuSolver.js";
 
-class Sudoku {
+export default class Sudoku {
     constructor(N, K) {
         this.N = N;
         this.K = K;

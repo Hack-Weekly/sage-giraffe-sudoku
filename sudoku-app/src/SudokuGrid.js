@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import './SudokuGrid.css';
-const SudokuGrid = () => {
-  const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
-
-  const handleInputChange = (row, col, value) => {
-    const newGrid = grid.map((rowArray, rowIndex) =>
-      rowArray.map((cellValue, colIndex) =>
-        rowIndex === row && colIndex === col ? value : cellValue
-      )
-    );
-    setGrid(newGrid);
-  };
-
+const SudokuGrid = ({ grid, handleInputChange }) => {
   return (
     <div className="sudoku-grid">
       {grid.map((rowArray, rowIndex) => (
