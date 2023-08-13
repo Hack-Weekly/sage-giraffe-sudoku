@@ -1,5 +1,6 @@
 import './App.css';
 import SudokuGrid from './SudokuGrid';
+import MyComponent from './theme';
 
 function App() {
   return (
@@ -7,15 +8,17 @@ function App() {
       <Header/>
       <SudokuGrid/>
       <Buttons/>
+      <MyComponent/>
     </h1>
   );
 }
 
 function Header() {
   return(
-    <h1 class="Header">
-      Sudoku App
-    </h1>
+    <div class="Header">
+      <h1>Sudoku App</h1>
+      <button class="toggle-theme">Mode</button>
+    </div>
   )
 }
 
@@ -28,5 +31,6 @@ function Buttons() {
     </div>
   )
 }
+
 
 export default App;
