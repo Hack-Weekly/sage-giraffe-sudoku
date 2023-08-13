@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .Buttons {
@@ -15,7 +19,6 @@
 }
 
 .button{
-  border-style: none;
   padding: 10px 20px;
   font-size: 1.2em;
 }
@@ -31,3 +34,32 @@
 .green{
   background-color: rgb(130, 224, 130);
 }
+.Header{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/*light/dark mode styling*/
+.toggle-theme{
+  padding: 10px;
+  background-color: var(--body-color);
+}
+:root.light{
+  --text-color:  rgb(18, 18, 18);
+  --body-color: rgb(240, 240, 240);
+  --border-color: rgb(18, 18, 18);
+}
+:root.dark{
+  --text-color:rgb(240, 240, 240);
+  --body-color: rgb(18, 18, 18);
+  --border-color: rgb(240, 240, 240);
+}
+body{
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+body button{
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+}
+
