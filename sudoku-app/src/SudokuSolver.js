@@ -55,27 +55,32 @@ function isValid(board, row, col, k) {
 }
 
 /**
+ * determines if the current grid is empty.
+ */
+const isEmpty = grid => grid === '.';
+
+/**
  * Solves the puzzle. This algorithm uses backtracking.
  * @param data 2D array representing the sudoku board.
  * @returns {boolean} returns a boolean that determines if
  * the puzzle was solved.
  */
 function sudokoSolver(data) {
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if (data[i][j] == '.') {
-                for (let k = 1; k <= 9; k++) {
-                    if (isValid(data, i, j, k)) {
-                        data[i][j] = `${k}`;
-                        if (sudokoSolver(data)) {
-                            return true;
-                        } else {
-                            data[i][j] = '.';
-                        }
-                    }
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (!isEmpty(data[row][col])) continue;
+
+            for (let k = 1; k <= 9; k++) {
+                if (!isValid(data, row, col, k)) continue;
+
+                data[row][col] = `${k}`;
+                if (sudokoSolver(data)) {
+                    return true;
+                } else {
+                    data[row][col] = '.';
                 }
-                return false;
             }
+            return false;
         }
     }
     return true;
@@ -84,5 +89,3 @@ function sudokoSolver(data) {
 test1()
 test2()
 test3()
-
-
