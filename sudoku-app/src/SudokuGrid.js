@@ -9,7 +9,10 @@ const SudokuGrid = ({ grid, solution, handleInputChange }) => {
             <input
               key={colIndex}
               type="text"
-              className="sudoku-cell"
+              className={
+                `sudoku-cell 
+                ${rowIndex == 3 || rowIndex == 6 ? "t-border" : ""} 
+                ${colIndex + 1 == 3 || colIndex + 1 == 6 ? "r-border" : ""}`}
               value={solution.length > 0 ? solution[rowIndex][colIndex] : cellValue}
               maxLength="1"
               readOnly={solution.length > 0}

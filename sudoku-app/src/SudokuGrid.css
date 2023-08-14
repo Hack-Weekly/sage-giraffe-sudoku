@@ -8,3 +8,15 @@
 .sudoku-grid{
     border: 2px solid rgb(49, 43, 51);
 }
+
+.sudoku-row input:focus {
+    outline: none;
+}
+
+.r-border {
+    border-right: 2px solid rgb(49, 43, 51);
+}
+
+.t-border {
+    border-top: 2px solid rgb(49, 43, 51);
+}
