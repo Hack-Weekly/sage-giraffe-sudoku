@@ -44,3 +44,25 @@ export function sudokuSolver(data) {
     return true;
 }
 
+export function sudokuChecker(board) {
+    let set = new Set();
+
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (isEmpty(board[row][col])) return false;
+            if (set.has(
+                "row" + row + "" + board[row][col],
+                "col" + col + "" + board[row][col],
+                "grid" + Math.ceil((row + 1)/3.0) + Math.ceil((col + 1)/3.0) + board[row][col])) return false;
+            else {
+                set.add(
+                    "row" + row + "" + board[row][col],
+                    "col" + col + "" + board[row][col],
+                    "grid" + Math.ceil((row + 1)/3.0) + Math.ceil((col + 1)/3.0) + board[row][col]);
+            }
+        }
+    }
+
+    return true;
+}
+

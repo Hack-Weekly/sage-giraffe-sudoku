@@ -3,10 +3,21 @@ import './App.css';
 import SudokuGrid from './SudokuGrid.js';
 import MyComponent from './theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
+import { sudokuChecker, sudokuSolver } from './logic/SudokuSolver.js';
 import { removeMatDots } from './Helper.js';
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
+
+  const isFullyFilled = (grid) => {
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid[row][col] === "") return false;
+      }
+    }
+
+    return true;
+  }
 
   const handleGridChange = (row, col, value) => {
     const newGrid = grid.map((rowArray, rowIndex) =>
@@ -15,6 +26,15 @@ function App() {
       )
     );
     setGrid(newGrid);
+
+    if (isFullyFilled(newGrid)) {
+      if (sudokuChecker(newGrid.map(row => row.slice()))) {
+        alert("Sudoku solved!");
+      }
+      else {
+        alert("Sudoku wrong!");
+      }
+    }
   };
 
   const handleDifficultySelection = (difficulty) => {
