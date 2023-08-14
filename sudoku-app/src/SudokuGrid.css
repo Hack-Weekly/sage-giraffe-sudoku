@@ -8,3 +8,7 @@
 .sudoku-grid{
     border: 2px solid rgb(49, 43, 51);
 }
+
+.sudoku-row input:focus {
+    outline: none;
+}
