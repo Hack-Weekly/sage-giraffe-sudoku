@@ -1,10 +1,25 @@
 .sudoku-cell{
-    border: 1px solid rgb(49, 43, 51);
-    height: 50px;
+    border: 1px solid rgb(49, 43, 51, .5);
+    height: 50;
     width: 50px;
     text-align: center;
     font-size: 50px;
     
+}
+.sudoku-grid{
+    border: 2px solid rgb(49, 43, 51);
+}
+
+.sudoku-row input:focus {
+    outline: none;
+}
+
+.r-border {
+    border-right: 2px solid rgb(49, 43, 51);
+}
+
+.t-border {
+    border-top: 2px solid rgb(49, 43, 51);
 }
 
 
