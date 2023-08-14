@@ -3,11 +3,12 @@ import './App.css';
 import SudokuGrid from './SudokuGrid.js';
 import MyComponent from './theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
-import { sudokuChecker, sudokuSolver } from './logic/SudokuSolver.js';
+import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
 import { removeMatDots } from './Helper.js';
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
+  const [solution, setSolution] = useState([]);
 
   const isFullyFilled = (grid) => {
     for (let row = 0; row < 9; row++) {
@@ -15,7 +16,6 @@ function App() {
         if (grid[row][col] === "") return false;
       }
     }
-
     return true;
   }
 
@@ -30,8 +30,7 @@ function App() {
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
         alert("Sudoku solved!");
-      }
-      else {
+      } else {
         alert("Sudoku wrong!");
       }
     }
@@ -44,7 +43,7 @@ function App() {
       case "easy":
         holes = 20;
         break;
-      
+
       case "medium":
         holes = 35;
         break;
@@ -58,41 +57,62 @@ function App() {
     sudoku.fillValues();
 
     setGrid(sudoku.mat);
-  }
+    setSolution([]); // Clear any existing solution when a new puzzle is generated
+  };
+
+  const solveForMe = () => {
+    if (grid.length === 0) {
+      alert("Generate a puzzle first!");
+      return;
+    }
+
+    const solutionGrid = JSON.parse(JSON.stringify(grid)); // Create a copy of the current grid
+    sudokuSolver(solutionGrid); // Calculate the solution
+    setSolution(solutionGrid); // Store the solution in the state
+  };
+
 
   return (
-    <h1 className="App">
-      <Header/>
+    <div className="App">
+      <Header />
       <SudokuGrid
-        grid = { grid }
-        handleInputChange = { (rowIndex, colIndex, value) => 
-          handleGridChange(rowIndex, colIndex, value) }/>
+        grid={grid}
+        solution={solution}
+        handleInputChange={(rowIndex, colIndex, value) =>
+          handleGridChange(rowIndex, colIndex, value)}
+      />
       <Buttons
-        handleDifficultySelection = { (difficulty) => 
-          handleDifficultySelection(difficulty) }/>
-      <MyComponent/>
-    </h1>
+        handleDifficultySelection={(difficulty) =>
+          handleDifficultySelection(difficulty)}
+        solveForMe={solveForMe}
+      />
+      <MyComponent />
+    </div>
   );
 }
 
 function Header() {
-  return(
-    <div class="Header">
+  return (
+    <div className="Header">
       <h1>Sudoku App</h1>
-      <button class="toggle-theme">Mode</button>
+      <button className="toggle-theme">Mode</button>
     </div>
   )
 }
 
-function Buttons({ handleDifficultySelection }) {
-  return(
-    <div class="Buttons">
-      <button class="button green" onClick={() => handleDifficultySelection("easy")}>Easy</button>
-      <button class="button blue" onClick={() => handleDifficultySelection("medium")}>Medium</button>
-      <button class="button red" onClick={() => handleDifficultySelection("hard")}>Hard</button>
+function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
+  return (
+    <div className="AllButtons">
+      <div className="Buttons">
+        <button className="button green" onClick={() => handleDifficultySelection("easy")}>Easy</button>
+        <button className="button blue" onClick={() => handleDifficultySelection("medium")}>Medium</button>
+        <button className="button red" onClick={() => handleDifficultySelection("hard")}>Hard</button>
+      </div>
+      <div className="Buttons">
+        <button className="button" onClick={solveForMe}>Solve for Me</button>
+      </div>
     </div>
-  )
+  );
 }
-
 
 export default App;

@@ -10,9 +10,11 @@
   padding-top: 0.5em;
   width: 16em;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0 auto;
+  gap:20px;
 }
+
 
 .button:hover {
   cursor: pointer;
