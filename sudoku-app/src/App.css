@@ -60,8 +60,9 @@ body{
   background-color: var(--body-color);
   color: var(--text-color);
 }
-body button{
+body button {
   color: var(--text-color);
   border: 2px solid var(--border-color);
+  background-color: transparent; 
 }
 
