@@ -7,12 +7,14 @@
 }
 
 .Buttons {
-  padding-top: 0.5em;
-  width: 16em;
+  padding-bottom: 15px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
   gap:20px;
+}
+.AllButtons{
+  padding: 15px 0;
 }
 
 
@@ -22,7 +24,10 @@ button:hover {
 
 .button{
   padding: 10px 20px;
-  font-size: 1.2em;
+  font-size: 1.5rem;
+}
+h1{
+  margin: 15px 0;
 }
 
 .red{
