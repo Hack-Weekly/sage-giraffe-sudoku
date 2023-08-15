@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
 import SudokuGrid from './SudokuGrid.js';
-import MyComponent from './theme.js';
+import Theme from './theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
 import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
+import { useEffect } from 'react';
 import { removeMatDots } from './Helper.js';
+
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
+
 
   const isFullyFilled = (grid) => {
     for (let row = 0; row < 9; row++) {
@@ -59,18 +62,15 @@ function App() {
     setGrid(sudoku.mat);
     setSolution([]); // Clear any existing solution when a new puzzle is generated
   };
-
   const solveForMe = () => {
     if (grid.length === 0) {
       alert("Generate a puzzle first!");
       return;
     }
-
     const solutionGrid = JSON.parse(JSON.stringify(grid)); // Create a copy of the current grid
     sudokuSolver(solutionGrid); // Calculate the solution
     setSolution(solutionGrid); // Store the solution in the state
   };
-
 
   return (
     <div className="App">
@@ -86,7 +86,7 @@ function App() {
           handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
       />
-      <MyComponent />
+      <Theme />
     </div>
   );
 }
@@ -100,7 +100,12 @@ function Header() {
   )
 }
 
+const modes = ["easy", "medium", "hard"];
 function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
+  useEffect(() => {
+    handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
+  }, []); 
+
   return (
     <div className="AllButtons">
       <div className="Buttons">
