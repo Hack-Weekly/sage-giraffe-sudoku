@@ -16,7 +16,7 @@
 }
 
 
-.button:hover {
+button:hover {
   cursor: pointer;
 }
 
@@ -39,22 +39,28 @@
 .Header{
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 /*light/dark mode styling*/
 .toggle-theme{
-  padding: 10px;
-  background-color: var(--body-color);
+  padding: 20px;
+  background: var(--body-color) var(--mode-image) 100% no-repeat;
+  border: none;
+
 }
 :root.light{
   --text-color:  rgb(18, 18, 18);
   --body-color: rgb(240, 240, 240);
   --border-color: rgb(18, 18, 18);
+  --mode-image:  url(icons/light-icon.svg) ;
+
 }
 :root.dark{
   --text-color:rgb(240, 240, 240);
   --body-color: rgb(18, 18, 18);
   --border-color: rgb(240, 240, 240);
+  --mode-image:  url(icons/moon-icon.png);
+
 }
 body{
   background-color: var(--body-color);

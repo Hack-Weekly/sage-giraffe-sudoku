@@ -95,7 +95,7 @@ function Header() {
   return (
     <div className="Header">
       <h1>Sudoku App</h1>
-      <button className="toggle-theme">Mode</button>
+      <button className="toggle-theme"></button>
     </div>
   )
 }
