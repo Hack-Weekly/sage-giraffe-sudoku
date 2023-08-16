@@ -62,7 +62,7 @@ function App() {
 
     switch (difficulty) {
       case "easy":
-        holes = 2;
+        holes = 1;
         break;
 
       case "medium":
