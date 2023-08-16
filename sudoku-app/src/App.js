@@ -29,6 +29,7 @@ function App() {
 
   const startTimer = () => {
     setStartTime(Date.now());
+    setElapsedTime(0)
   };
 
   const stopTimer = () => {
@@ -51,18 +52,17 @@ function App() {
 
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
-      const totalSeconds = elapsedTime;
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      alert(`Sudoku solved in ${formattedTime}`);
-      stopTimer();
+        const totalSeconds = elapsedTime;
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        alert(`Sudoku solved in ${formattedTime}`);
+        stopTimer();
       } else {
         alert("Sudoku wrong!");
       }
     }
   };
-
 
   const isFullyFilled = (grid) => {
     for (let row = 0; row < 9; row++) {
@@ -73,14 +73,12 @@ function App() {
     return true;
   }
 
-  
-
   const handleDifficultySelection = (difficulty) => {
     let holes = 0;
 
     switch (difficulty) {
       case "easy":
-        holes = 20;
+        holes = 1;
         break;
       case "medium":
         holes = 35;
@@ -99,6 +97,7 @@ function App() {
     setGrid(sudoku.mat);
     setSolution([]);
     setErrorsGrid(new Array(9).fill().map(() => new Array(9).fill(false)));
+    startTimer();
   };
 
   const solveForMe = () => {
@@ -109,14 +108,12 @@ function App() {
     const solutionGrid = JSON.parse(JSON.stringify(grid));
     sudokuSolver(solutionGrid);
     setSolution(solutionGrid);
-    stopTimer()
+    stopTimer();
   };
 
   const toggleErrors = () => {
-    setErrorsVisibility(!errorsVisibility)
+    setErrorsVisibility(!errorsVisibility);
   }
-
-  
 
   return (
     <div className="App">
@@ -135,7 +132,7 @@ function App() {
           handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
         startTimer={startTimer}
-        remainingTime={elapsedTime}
+        elapsedTime={elapsedTime}
         toggleErrors={toggleErrors}
         errorsVisibility={errorsVisibility}
       />
