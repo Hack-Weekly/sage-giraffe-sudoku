@@ -5,11 +5,12 @@ import Theme from './Theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
 import Header from './Header.js';
 import Buttons from './Buttons.js';
-import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
+import { sudokuSolver, sudokuChecker, generateErrorGrid } from './logic/SudokuSolver.js';
 
 function App() {
-  const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
-  const [givenGrid, setGivenGrid] = useState(Array(9).fill(Array(9).fill('')));
+  const [grid, setGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
+  const [givenGrid, setGivenGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
+  const [errorsGrid, setErrorsGrid] = useState(new Array(9).fill().map(() => new Array(9).fill(false)));
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
   const [timerId, setTimerId] = useState(null)
@@ -46,6 +47,8 @@ function App() {
     );
     setGrid(newGrid);
 
+    setErrorsGrid(generateErrorGrid(newGrid))
+
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
         alert("Sudoku solved!");
@@ -79,6 +82,7 @@ function App() {
     setGivenGrid(sudoku.mat);
     setGrid(sudoku.mat);
     setSolution([]);
+    setErrorsGrid(new Array(9).fill().map(() => new Array(9).fill(false)));
   };
 
   const solveForMe = () => {
@@ -104,6 +108,7 @@ function App() {
     <div className="App">
       <Header />
       <SudokuGrid
+        errorsGrid={errorsGrid}
         givenGrid={givenGrid}
         grid={grid}
         solution={solution}

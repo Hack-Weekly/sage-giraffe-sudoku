@@ -52,3 +52,8 @@
         font-size: 1rem;
     }
 }
+
+input.cell-error {
+    color: red;
+    caret-color: black;
+}
