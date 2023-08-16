@@ -19,11 +19,11 @@
 }
 
 .r-border {
-    border-right: 2px solid rgb(49, 43, 51);
+    border-right: 3px solid rgb(49, 43, 51);
 }
 
 .t-border {
-    border-top: 2px solid rgb(49, 43, 51);
+    border-top: 3px solid rgb(49, 43, 51);
 }
 
 .sudoku-cell-given {
@@ -51,4 +51,9 @@
     .button {
         font-size: 1rem;
     }
+}
+
+input.cell-error {
+    color: red;
+    caret-color: black;
 }
