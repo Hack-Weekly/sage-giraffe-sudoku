@@ -30,7 +30,7 @@ export default class Sudoku {
         let index = 0;
         for (let i = 0; i < this.SRN; i++) {
             for (let j = 0; j < this.SRN; j++) {
-                this.mat[row + i][col + j] = numbers[index];
+                this.mat[row + i][col + j] = `${numbers[index]}`;
                 index++;
             }
         }
@@ -88,6 +88,6 @@ export default class Sudoku {
     }
 }
 
-const sudoku = new Sudoku(9, 50)
-sudoku.fillValues()
-sudoku.printBoard()
+// const sudoku = new Sudoku(9, 50)
+// sudoku.fillValues()
+// sudoku.printBoard()

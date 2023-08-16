@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import SudokuGrid from './SudokuGrid.js';
-import Theme from './theme.js';
+import Theme from './Theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
-import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
-import { useEffect } from 'react';
-import { removeMatDots } from './Helper.js';
-
+import Header from './Header.js';
+import Buttons from './Buttons.js';
+import { sudokuSolver, sudokuChecker, generateErrorGrid } from './logic/SudokuSolver.js';
 
 function App() {
-  const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
+  const [grid, setGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
+  const [givenGrid, setGivenGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
+  const [errorsGrid, setErrorsGrid] = useState(new Array(9).fill().map(() => new Array(9).fill(false)));
+  const [errorsVisibility, setErrorsVisibility] = useState(false)
   const [solution, setSolution] = useState([]);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [timerId, setTimerId] = useState(null)
+
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const timer = setInterval(() => {
+        setRemainingTime(prevTime => prevTime - 1);
+      }, 1000);
+      setTimerId(timer)
+      return () => clearInterval(timer);
+    }
+  }, [remainingTime]);
 
 
   const isFullyFilled = (grid) => {
@@ -23,6 +37,10 @@ function App() {
   }
 
   const handleGridChange = (row, col, value) => {
+    if (!/^[1-9\b]*$/.test(value)) {
+      return
+    }
+
     const newGrid = grid.map((rowArray, rowIndex) =>
       rowArray.map((cellValue, colIndex) =>
         rowIndex === row && colIndex === col ? value : cellValue
@@ -30,9 +48,12 @@ function App() {
     );
     setGrid(newGrid);
 
+    setErrorsGrid(generateErrorGrid(newGrid))
+
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
         alert("Sudoku solved!");
+        stopTimer()
       } else {
         alert("Sudoku wrong!");
       }
@@ -46,76 +67,70 @@ function App() {
       case "easy":
         holes = 20;
         break;
-
       case "medium":
         holes = 35;
         break;
-
       case "hard":
         holes = 50;
+        break;
+      default:
         break;
     }
 
     const sudoku = new Sudoku(9, holes);
     sudoku.fillValues();
 
+    setGivenGrid(sudoku.mat);
     setGrid(sudoku.mat);
-    setSolution([]); // Clear any existing solution when a new puzzle is generated
+    setSolution([]);
+    setErrorsGrid(new Array(9).fill().map(() => new Array(9).fill(false)));
   };
+
   const solveForMe = () => {
     if (grid.length === 0) {
       alert("Generate a puzzle first!");
       return;
     }
-    const solutionGrid = JSON.parse(JSON.stringify(grid)); // Create a copy of the current grid
-    sudokuSolver(solutionGrid); // Calculate the solution
-    setSolution(solutionGrid); // Store the solution in the state
+    const solutionGrid = JSON.parse(JSON.stringify(grid));
+    sudokuSolver(solutionGrid);
+    setSolution(solutionGrid);
+    stopTimer()
+  };
+
+  const toggleErrors = () => {
+    setErrorsVisibility(!errorsVisibility)
+  }
+
+  const startTimer = (minutes) => {
+    setRemainingTime(minutes * 60);
+  };
+
+  const stopTimer = () => {
+    clearInterval(timerId);
   };
 
   return (
     <div className="App">
       <Header />
       <SudokuGrid
+        errorsGrid={errorsGrid}
+        givenGrid={givenGrid}
         grid={grid}
         solution={solution}
         handleInputChange={(rowIndex, colIndex, value) =>
           handleGridChange(rowIndex, colIndex, value)}
+        errorsVisibility={errorsVisibility}
       />
       <Buttons
         handleDifficultySelection={(difficulty) =>
           handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
+        startTimer={startTimer}
+        remainingTime={remainingTime}
+        toggleErrors={toggleErrors}
+        errorsVisibility={errorsVisibility}
       />
       <Theme />
-    </div>
-  );
-}
-
-function Header() {
-  return (
-    <div className="Header">
-      <h1>Sudoku App</h1>
-      <button className="toggle-theme"></button>
-    </div>
-  )
-}
-
-const modes = ["easy", "medium", "hard"];
-function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
-  useEffect(() => {
-    handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
-  }, []); 
-
-  return (
-    <div className="AllButtons">
-      <div className="Buttons">
-        <button className="button green" onClick={() => handleDifficultySelection("easy")}>Easy</button>
-        <button className="button blue" onClick={() => handleDifficultySelection("medium")}>Medium</button>
-        <button className="button red" onClick={() => handleDifficultySelection("hard")}>Hard</button>
-      </div>
-      <div className="Buttons">
-        <button className="button" onClick={solveForMe}>Solve for Me</button>
-      </div>
     </div>
   );
 }

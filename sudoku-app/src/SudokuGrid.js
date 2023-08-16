@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import './SudokuGrid.css';
-const SudokuGrid = ({ grid, solution, handleInputChange }) => {
+
+const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange, errorsVisibility }) => {
   return (
     <div className="sudoku-grid">
       {grid.map((rowArray, rowIndex) => (
@@ -11,11 +11,12 @@ const SudokuGrid = ({ grid, solution, handleInputChange }) => {
               type="text"
               className={
                 `sudoku-cell 
-                ${rowIndex == 3 || rowIndex == 6 ? "t-border" : ""} 
-                ${colIndex + 1 == 3 || colIndex + 1 == 6 ? "r-border" : ""}`}
+                  ${rowIndex === 3 || rowIndex === 6 ? "t-border" : ""} 
+                  ${colIndex === 2 || colIndex === 5 ? "r-border" : ""}
+                  ${errorsVisibility && errorsGrid[rowIndex][colIndex] ? "cell-error" : ""}`}
               value={solution.length > 0 ? solution[rowIndex][colIndex] : cellValue}
               maxLength="1"
-              readOnly={solution.length > 0}
+              readOnly={givenGrid[rowIndex][colIndex] !== ""}
               onChange={(e) =>
                 handleInputChange(rowIndex, colIndex, e.target.value)
               }
@@ -29,9 +30,3 @@ const SudokuGrid = ({ grid, solution, handleInputChange }) => {
 
 
 export default SudokuGrid;
-
-
-
-
-
-
