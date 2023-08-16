@@ -27,6 +27,7 @@ const SudokuGrid = ({ grid, solution, handleInputChange }) => {
   );
 };
 
+
 export default SudokuGrid;
 
 
