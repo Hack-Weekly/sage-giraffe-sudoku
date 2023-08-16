@@ -4,7 +4,17 @@ function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingT
   const modes = ["easy", "medium", "hard"];
 
   useEffect(() => {
-    handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
+    let renderedMode = Math.floor(Math.random() * 3);
+    handleDifficultySelection(modes[renderedMode]);
+    if(renderedMode === 0){
+      startTimer(20);
+    }
+    else if(renderedMode === 1){
+      startTimer(15);
+    }
+    else if (renderedMode === 2){
+      startTimer(10);
+    }
   }, []);
 
   return (
