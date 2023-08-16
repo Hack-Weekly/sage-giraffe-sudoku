@@ -44,12 +44,17 @@ export function sudokuSolver(data) {
     return true;
 }
 
+const AVAILABLE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 export function sudokuChecker(board) {
     let set = new Set();
 
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
-            if (isEmpty(board[row][col])) return false;
+            if (parseInt(board[row][col] == NaN |
+                !AVAILABLE_NUMBERS.includes(parseInt(board[row][col]))) |
+                isEmpty(board[row][col])) return false;
+                
             if (set.has(
                 "row" + row + "" + board[row][col],
                 "col" + col + "" + board[row][col],
