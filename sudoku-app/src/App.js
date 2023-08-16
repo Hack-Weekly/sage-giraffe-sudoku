@@ -11,6 +11,17 @@ import { removeMatDots } from './Helper.js';
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const timer = setInterval(() => {
+        setRemainingTime(prevTime => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [remainingTime]);
 
 
   const isFullyFilled = (grid) => {
@@ -72,6 +83,10 @@ function App() {
     setSolution(solutionGrid); // Store the solution in the state
   };
 
+  const startTimer = (minutes) => {
+    setRemainingTime(minutes * 60); 
+  };
+
   return (
     <div className="App">
       <Header />
@@ -85,6 +100,8 @@ function App() {
         handleDifficultySelection={(difficulty) =>
           handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
+        startTimer={startTimer}
+        remainingTime={remainingTime}
       />
       <Theme />
     </div>
@@ -101,7 +118,7 @@ function Header() {
 }
 
 const modes = ["easy", "medium", "hard"];
-function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
+function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime }) {
   useEffect(() => {
     handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
   }, []); 
@@ -109,13 +126,15 @@ function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
   return (
     <div className="AllButtons">
       <div className="Buttons">
-        <button className="button green" onClick={() => handleDifficultySelection("easy")}>Easy</button>
-        <button className="button blue" onClick={() => handleDifficultySelection("medium")}>Medium</button>
-        <button className="button red" onClick={() => handleDifficultySelection("hard")}>Hard</button>
+        <button className="button green" onClick={() => { startTimer(20); handleDifficultySelection("easy"); }}>Easy</button>
+        <button className="button blue" onClick={() => { startTimer(15); handleDifficultySelection("medium"); }}>Medium</button>
+        <button className="button red" onClick={() => { startTimer(10); handleDifficultySelection("hard"); }}>Hard</button>
       </div>
       <div className="Buttons">
         <button className="button" onClick={solveForMe}>Solve for Me</button>
       </div>
+      <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
+    
     </div>
   );
 }
