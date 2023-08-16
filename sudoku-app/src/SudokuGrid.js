@@ -1,6 +1,6 @@
 import './SudokuGrid.css';
 
-const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange }) => {
+const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange, errorsVisibility }) => {
   return (
     <div className="sudoku-grid">
       {grid.map((rowArray, rowIndex) => (
@@ -13,7 +13,7 @@ const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange }
                 `sudoku-cell 
                   ${rowIndex === 2 || rowIndex === 5 ? "t-border" : ""} 
                   ${colIndex === 2 || colIndex === 5 ? "r-border" : ""}
-                  ${errorsGrid[rowIndex][colIndex] ? "cell-error" : ""}`}
+                  ${errorsVisibility && errorsGrid[rowIndex][colIndex] ? "cell-error" : ""}`}
               value={solution.length > 0 ? solution[rowIndex][colIndex] : cellValue}
               maxLength="1"
               readOnly={givenGrid[rowIndex][colIndex] !== ""}

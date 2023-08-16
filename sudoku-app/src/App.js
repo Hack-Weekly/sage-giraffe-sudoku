@@ -11,6 +11,7 @@ function App() {
   const [grid, setGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
   const [givenGrid, setGivenGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
   const [errorsGrid, setErrorsGrid] = useState(new Array(9).fill().map(() => new Array(9).fill(false)));
+  const [errorsVisibility, setErrorsVisibility] = useState(false)
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
   const [timerId, setTimerId] = useState(null)
@@ -96,6 +97,10 @@ function App() {
     stopTimer()
   };
 
+  const toggleErrors = () => {
+    setErrorsVisibility(!errorsVisibility)
+  }
+
   const startTimer = (minutes) => {
     setRemainingTime(minutes * 60);
   };
@@ -114,6 +119,7 @@ function App() {
         solution={solution}
         handleInputChange={(rowIndex, colIndex, value) =>
           handleGridChange(rowIndex, colIndex, value)}
+        errorsVisibility={errorsVisibility}
       />
       <Buttons
         handleDifficultySelection={(difficulty) =>
@@ -121,6 +127,8 @@ function App() {
         solveForMe={solveForMe}
         startTimer={startTimer}
         remainingTime={remainingTime}
+        toggleErrors={toggleErrors}
+        errorsVisibility={errorsVisibility}
       />
       <Theme />
     </div>

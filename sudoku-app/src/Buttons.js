@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime }) {
+function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime, toggleErrors, errorsVisibility }) {
   const modes = ["easy", "medium", "hard"];
 
   useEffect(() => {
@@ -16,6 +16,7 @@ function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingT
       </div>
       <div className="Buttons">
         <button className="button" onClick={solveForMe}>Solve for Me</button>
+        <button className="button" onClick={toggleErrors}>{errorsVisibility ? "Hide Errors" : "Show Errors"}</button>
       </div>
       <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
 
