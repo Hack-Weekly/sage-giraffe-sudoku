@@ -9,6 +9,8 @@ const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange, 
             <input
               key={colIndex}
               type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className={
                 `sudoku-cell 
                   ${rowIndex === 3 || rowIndex === 6 ? "t-border" : ""} 
