@@ -88,6 +88,6 @@ export default class Sudoku {
     }
 }
 
-const sudoku = new Sudoku(9, 50)
-sudoku.fillValues()
-sudoku.printBoard()
+// const sudoku = new Sudoku(9, 50)
+// sudoku.fillValues()
+// sudoku.printBoard()

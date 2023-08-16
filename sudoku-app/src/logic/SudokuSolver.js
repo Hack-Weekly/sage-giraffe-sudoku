@@ -44,9 +44,9 @@ export function sudokuSolver(data) {
     return true;
 }
 
-const AVAILABLE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export function sudokuChecker(board) {
+    const AVAILABLE_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let set = new Set();
 
     for (let row = 0; row < 9; row++) {

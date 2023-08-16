@@ -1,11 +1,12 @@
-.sudoku-cell{
+.sudoku-cell {
     border: 1px solid rgb(49, 43, 51, .5);
     width: 50px;
     text-align: center;
     font-size: 3rem;
     box-sizing: border-box;
 }
-.sudoku-grid{
+
+.sudoku-grid {
     border: 2px solid rgb(49, 43, 51);
 }
 
@@ -13,7 +14,7 @@
     outline: none;
 }
 
-.sudoku-row > input:read-only {
+.sudoku-row>input:read-only {
     background-color: #ededed;
 }
 
@@ -27,25 +28,27 @@
 
 .sudoku-cell-given {
     color: black;
-  }
-  
-  .sudoku-cell-new {
-    color: red;
-  }
+}
 
-@media(max-width:600px){
-    h1{
+.sudoku-cell-new {
+    color: red;
+}
+
+@media(max-width:600px) {
+    h1 {
         font-size: clamp(1rem, calc(1rem + 2vw), 2rem);
     }
-    .sudoku-grid{
+
+    .sudoku-grid {
         width: clamp(250px, calc(250px + 22vw), 450px);
     }
-    .sudoku-cell{
+
+    .sudoku-cell {
         width: calc(100% / 9);
         font-size: 2rem;
     }
-    .button{
+
+    .button {
         font-size: 1rem;
     }
 }
-
