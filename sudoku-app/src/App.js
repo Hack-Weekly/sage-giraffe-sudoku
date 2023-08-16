@@ -11,30 +11,29 @@ function App() {
   const [grid, setGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
   const [givenGrid, setGivenGrid] = useState(new Array(9).fill().map(() => new Array(9).fill('')));
   const [errorsGrid, setErrorsGrid] = useState(new Array(9).fill().map(() => new Array(9).fill(false)));
-  const [errorsVisibility, setErrorsVisibility] = useState(false)
+  const [errorsVisibility, setErrorsVisibility] = useState(false);
   const [solution, setSolution] = useState([]);
-  const [remainingTime, setRemainingTime] = useState(0);
-  const [timerId, setTimerId] = useState(null)
+  const [startTime, setStartTime] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    if (remainingTime > 0) {
+    if (startTime !== null) {
       const timer = setInterval(() => {
-        setRemainingTime(prevTime => prevTime - 1);
+        const currentTime = Date.now();
+        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+        setElapsedTime(elapsedSeconds);
       }, 1000);
-      setTimerId(timer)
       return () => clearInterval(timer);
     }
-  }, [remainingTime]);
+  }, [startTime]);
 
+  const startTimer = () => {
+    setStartTime(Date.now());
+  };
 
-  const isFullyFilled = (grid) => {
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        if (grid[row][col] === "") return false;
-      }
-    }
-    return true;
-  }
+  const stopTimer = () => {
+    setStartTime(null);
+  };
 
   const handleGridChange = (row, col, value) => {
     if (!/^[1-9\b]*$/.test(value)) {
@@ -52,13 +51,29 @@ function App() {
 
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
-        alert("Sudoku solved!");
-        stopTimer()
+      const totalSeconds = elapsedTime;
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      alert(`Sudoku solved in ${formattedTime}`);
+      stopTimer();
       } else {
         alert("Sudoku wrong!");
       }
     }
   };
+
+
+  const isFullyFilled = (grid) => {
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid[row][col] === "") return false;
+      }
+    }
+    return true;
+  }
+
+  
 
   const handleDifficultySelection = (difficulty) => {
     let holes = 0;
@@ -101,13 +116,7 @@ function App() {
     setErrorsVisibility(!errorsVisibility)
   }
 
-  const startTimer = (minutes) => {
-    setRemainingTime(minutes * 60);
-  };
-
-  const stopTimer = () => {
-    clearInterval(timerId);
-  };
+  
 
   return (
     <div className="App">
@@ -126,7 +135,7 @@ function App() {
           handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
         startTimer={startTimer}
-        remainingTime={remainingTime}
+        remainingTime={elapsedTime}
         toggleErrors={toggleErrors}
         errorsVisibility={errorsVisibility}
       />
