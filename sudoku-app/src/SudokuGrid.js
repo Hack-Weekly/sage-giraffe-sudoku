@@ -11,7 +11,7 @@ const SudokuGrid = ({ errorsGrid, givenGrid, grid, solution, handleInputChange, 
               type="text"
               className={
                 `sudoku-cell 
-                  ${rowIndex === 2 || rowIndex === 5 ? "t-border" : ""} 
+                  ${rowIndex === 3 || rowIndex === 6 ? "t-border" : ""} 
                   ${colIndex === 2 || colIndex === 5 ? "r-border" : ""}
                   ${errorsVisibility && errorsGrid[rowIndex][colIndex] ? "cell-error" : ""}`}
               value={solution.length > 0 ? solution[rowIndex][colIndex] : cellValue}
