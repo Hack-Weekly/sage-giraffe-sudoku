@@ -10,7 +10,7 @@ on:
     branches: [ "feat-github-action" ]
 
 jobs:
-  build:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
     defaults:
