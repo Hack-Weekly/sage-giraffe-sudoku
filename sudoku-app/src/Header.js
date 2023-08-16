@@ -1,7 +1,7 @@
 function Header() {
   return (
     <div className="Header">
-      <h1>Sudoku</h1>
+      <h1>Sagedoku</h1>
       <button className="toggle-theme"></button>
     </div>
   )
