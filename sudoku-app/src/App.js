@@ -13,7 +13,7 @@ function App() {
   const [givenGrid, setGivenGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
-  
+
 
   useEffect(() => {
     if (remainingTime > 0) {
@@ -36,6 +36,10 @@ function App() {
   }
 
   const handleGridChange = (row, col, value) => {
+    if (!/^[1-9\b]*$/.test(value)) {
+      return
+    }
+
     const newGrid = grid.map((rowArray, rowIndex) =>
       rowArray.map((cellValue, colIndex) =>
         rowIndex === row && colIndex === col ? value : cellValue
@@ -74,20 +78,20 @@ function App() {
 
     setGivenGrid(sudoku.mat);
     setGrid(sudoku.mat);
-    setSolution([]); 
+    setSolution([]);
   };
   const solveForMe = () => {
     if (grid.length === 0) {
       alert("Generate a puzzle first!");
       return;
     }
-    const solutionGrid = JSON.parse(JSON.stringify(grid)); 
-    sudokuSolver(solutionGrid); 
+    const solutionGrid = JSON.parse(JSON.stringify(grid));
+    sudokuSolver(solutionGrid);
     setSolution(solutionGrid);
   };
 
   const startTimer = (minutes) => {
-    setRemainingTime(minutes * 60); 
+    setRemainingTime(minutes * 60);
   };
 
   return (
@@ -125,7 +129,7 @@ const modes = ["easy", "medium", "hard"];
 function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime }) {
   useEffect(() => {
     handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
-  }, []); 
+  }, []);
 
   return (
     <div className="AllButtons">
@@ -138,7 +142,7 @@ function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingT
         <button className="button" onClick={solveForMe}>Solve for Me</button>
       </div>
       <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
-    
+
     </div>
   );
 }
