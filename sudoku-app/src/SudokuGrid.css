@@ -21,6 +21,14 @@
     border-top: 2px solid rgb(49, 43, 51);
 }
 
+.sudoku-cell-given {
+    color: black;
+  }
+  
+  .sudoku-cell-new {
+    color: red;
+  }
+
 @media(max-width:600px){
     h1{
         font-size: clamp(1rem, calc(1rem + 2vw), 2rem);

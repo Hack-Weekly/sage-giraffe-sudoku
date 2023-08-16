@@ -12,6 +12,7 @@ function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
+  
 
   useEffect(() => {
     if (remainingTime > 0) {
@@ -71,16 +72,16 @@ function App() {
     sudoku.fillValues();
 
     setGrid(sudoku.mat);
-    setSolution([]); // Clear any existing solution when a new puzzle is generated
+    setSolution([]); 
   };
   const solveForMe = () => {
     if (grid.length === 0) {
       alert("Generate a puzzle first!");
       return;
     }
-    const solutionGrid = JSON.parse(JSON.stringify(grid)); // Create a copy of the current grid
-    sudokuSolver(solutionGrid); // Calculate the solution
-    setSolution(solutionGrid); // Store the solution in the state
+    const solutionGrid = JSON.parse(JSON.stringify(grid)); 
+    sudokuSolver(solutionGrid); 
+    setSolution(solutionGrid);
   };
 
   const startTimer = (minutes) => {
