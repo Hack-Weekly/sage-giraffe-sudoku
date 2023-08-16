@@ -24,7 +24,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./sudoku-app
     strategy:
       matrix:
         node-version: [18.x]
