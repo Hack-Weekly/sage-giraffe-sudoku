@@ -13,14 +13,14 @@ function App() {
   const [givenGrid, setGivenGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
-
+  const [timerId, setTimerId] = useState(null)
 
   useEffect(() => {
     if (remainingTime > 0) {
       const timer = setInterval(() => {
         setRemainingTime(prevTime => prevTime - 1);
       }, 1000);
-
+      setTimerId(timer)
       return () => clearInterval(timer);
     }
   }, [remainingTime]);
@@ -50,6 +50,7 @@ function App() {
     if (isFullyFilled(newGrid)) {
       if (sudokuChecker(newGrid.map(row => row.slice()))) {
         alert("Sudoku solved!");
+        stopTimer()
       } else {
         alert("Sudoku wrong!");
       }
@@ -88,10 +89,15 @@ function App() {
     const solutionGrid = JSON.parse(JSON.stringify(grid));
     sudokuSolver(solutionGrid);
     setSolution(solutionGrid);
+    stopTimer()
   };
 
   const startTimer = (minutes) => {
     setRemainingTime(minutes * 60);
+  };
+
+  const stopTimer = () => {
+    clearInterval(timerId);
   };
 
   return (
