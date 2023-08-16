@@ -28,7 +28,7 @@ function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingT
         <button className="button" onClick={solveForMe}>Solve for Me</button>
         <button className="button" onClick={toggleErrors}>{errorsVisibility ? "Hide Errors" : "Show Errors"}</button>
       </div>
-      <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
+      <div className="timer">Time elapsed: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
 
     </div>
   );
