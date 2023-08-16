@@ -7,22 +7,27 @@
 }
 
 .Buttons {
-  padding-top: 0.5em;
-  width: 16em;
+  padding-bottom: 15px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
   gap:20px;
 }
+.AllButtons{
+  padding: 15px 0;
+}
 
 
-.button:hover {
+button:hover {
   cursor: pointer;
 }
 
 .button{
   padding: 10px 20px;
-  font-size: 1.2em;
+  font-size: 1.5rem;
+}
+h1{
+  margin: 15px 0;
 }
 
 .red{
@@ -39,29 +44,36 @@
 .Header{
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 /*light/dark mode styling*/
 .toggle-theme{
-  padding: 10px;
-  background-color: var(--body-color);
+  padding: 20px;
+  background: var(--body-color) var(--mode-image) 100% no-repeat;
+  border: none;
+
 }
 :root.light{
   --text-color:  rgb(18, 18, 18);
   --body-color: rgb(240, 240, 240);
   --border-color: rgb(18, 18, 18);
+  --mode-image:  url(icons/light-icon.svg) ;
+
 }
 :root.dark{
   --text-color:rgb(240, 240, 240);
   --body-color: rgb(18, 18, 18);
   --border-color: rgb(240, 240, 240);
+  --mode-image:  url(icons/moon-icon.png);
+
 }
 body{
   background-color: var(--body-color);
   color: var(--text-color);
 }
-body button{
+body button {
   color: var(--text-color);
   border: 2px solid var(--border-color);
+  background-color: transparent; 
 }
 

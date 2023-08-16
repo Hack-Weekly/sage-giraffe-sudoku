@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import SudokuGrid from './SudokuGrid.js';
+import Theme from './theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
 import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
+import { useEffect } from 'react';
 import { removeMatDots } from './Helper.js';
-import MyComponent from './theme.js';
+
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
@@ -20,6 +22,7 @@ function App() {
       return () => clearInterval(timer);
     }
   }, [remainingTime]);
+
 
   const isFullyFilled = (grid) => {
     for (let row = 0; row < 9; row++) {
@@ -70,13 +73,11 @@ function App() {
     setGrid(sudoku.mat);
     setSolution([]); // Clear any existing solution when a new puzzle is generated
   };
-
   const solveForMe = () => {
     if (grid.length === 0) {
       alert("Generate a puzzle first!");
       return;
     }
-
     const solutionGrid = JSON.parse(JSON.stringify(grid)); // Create a copy of the current grid
     sudokuSolver(solutionGrid); // Calculate the solution
     setSolution(solutionGrid); // Store the solution in the state
@@ -96,12 +97,13 @@ function App() {
           handleGridChange(rowIndex, colIndex, value)}
       />
       <Buttons
-        startTimer={startTimer}
-        handleDifficultySelection={handleDifficultySelection}
+        handleDifficultySelection={(difficulty) =>
+          handleDifficultySelection(difficulty)}
         solveForMe={solveForMe}
+        startTimer={startTimer}
         remainingTime={remainingTime}
       />
-      <MyComponent />
+      <Theme />
     </div>
   );
 }
@@ -110,23 +112,29 @@ function Header() {
   return (
     <div className="Header">
       <h1>Sudoku App</h1>
-      <button className="toggle-theme">Mode</button>
+      <button className="toggle-theme"></button>
     </div>
-  );
+  )
 }
 
+const modes = ["easy", "medium", "hard"];
 function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime }) {
+  useEffect(() => {
+    handleDifficultySelection(modes[Math.floor(Math.random() * 3)]);
+  }, []); 
+
   return (
     <div className="AllButtons">
       <div className="Buttons">
         <button className="button green" onClick={() => { startTimer(20); handleDifficultySelection("easy"); }}>Easy</button>
         <button className="button blue" onClick={() => { startTimer(15); handleDifficultySelection("medium"); }}>Medium</button>
-        <button className="button red" onClick={() => { startTimer(15); handleDifficultySelection("hard"); }}>Hard</button>
+        <button className="button red" onClick={() => { startTimer(10); handleDifficultySelection("hard"); }}>Hard</button>
       </div>
       <div className="Buttons">
         <button className="button" onClick={solveForMe}>Solve for Me</button>
       </div>
       <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
+    
     </div>
   );
 }

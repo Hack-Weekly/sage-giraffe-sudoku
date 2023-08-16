@@ -1,10 +1,9 @@
 .sudoku-cell{
     border: 1px solid rgb(49, 43, 51, .5);
-    height: 50;
     width: 50px;
     text-align: center;
-    font-size: 50px;
-    
+    font-size: 3rem;
+    box-sizing: border-box;
 }
 .sudoku-grid{
     border: 2px solid rgb(49, 43, 51);
@@ -22,4 +21,18 @@
     border-top: 2px solid rgb(49, 43, 51);
 }
 
-
+@media(max-width:600px){
+    h1{
+        font-size: clamp(1rem, calc(1rem + 2vw), 2rem);
+    }
+    .sudoku-grid{
+        width: clamp(250px, calc(250px + 22vw), 450px);
+    }
+    .sudoku-cell{
+        width: calc(100% / 9);
+        font-size: 2rem;
+    }
+    .button{
+        font-size: 1rem;
+    }
+}
