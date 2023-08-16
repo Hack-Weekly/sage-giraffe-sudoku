@@ -32,3 +32,5 @@ jobs:
         cache-dependency-path: sudoku-app/package-lock.json
     - run: npm ci
     - run: npm run deploy
+      env:
+        deployment-token: ${{ secret.PERSON_ACCESS_TOKEN_FOR_PUSH_TO_GH_PAGES_BRANCH }}
