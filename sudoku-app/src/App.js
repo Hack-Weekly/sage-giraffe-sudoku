@@ -10,6 +10,7 @@ import { removeMatDots } from './Helper.js';
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
+  const [givenGrid, setGivenGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
   const [remainingTime, setRemainingTime] = useState(0);
   
@@ -71,6 +72,7 @@ function App() {
     const sudoku = new Sudoku(9, holes);
     sudoku.fillValues();
 
+    setGivenGrid(sudoku.mat);
     setGrid(sudoku.mat);
     setSolution([]); 
   };
@@ -92,6 +94,7 @@ function App() {
     <div className="App">
       <Header />
       <SudokuGrid
+        givenGrid={givenGrid}
         grid={grid}
         solution={solution}
         handleInputChange={(rowIndex, colIndex, value) =>
