@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import './App.css';
 import React, { useState, useEffect } from 'react';
-import SudokuGrid from './SudokuGrid';
+import './App.css';
 import SudokuGrid from './SudokuGrid.js';
-import MyComponent from './theme.js';
 import Sudoku from './logic/SudokuGenerator.js';
 import { sudokuSolver, sudokuChecker } from './logic/SudokuSolver.js';
 import { removeMatDots } from './Helper.js';
+import MyComponent from './theme.js';
 
 function App() {
   const [grid, setGrid] = useState(Array(9).fill(Array(9).fill('')));
   const [solution, setSolution] = useState([]);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const timer = setInterval(() => {
+        setRemainingTime(prevTime => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [remainingTime]);
 
   const isFullyFilled = (grid) => {
     for (let row = 0; row < 9; row++) {
@@ -73,6 +82,9 @@ function App() {
     setSolution(solutionGrid); // Store the solution in the state
   };
 
+  const startTimer = (minutes) => {
+    setRemainingTime(minutes * 60); 
+  };
 
   return (
     <div className="App">
@@ -84,9 +96,10 @@ function App() {
           handleGridChange(rowIndex, colIndex, value)}
       />
       <Buttons
-        handleDifficultySelection={(difficulty) =>
-          handleDifficultySelection(difficulty)}
+        startTimer={startTimer}
+        handleDifficultySelection={handleDifficultySelection}
         solveForMe={solveForMe}
+        remainingTime={remainingTime}
       />
       <MyComponent />
     </div>
@@ -94,56 +107,26 @@ function App() {
 }
 
 function Header() {
-  return(
-    <h1 class="Header">
-      Sudoku App
-    </h1>
-  )
-}
-
-function Buttons() {
-  const [remainingTime, setRemainingTime] = useState(0);
-
-  useEffect(() => {
-    if (remainingTime > 0) {
-      const timer = setInterval(() => {
-        setRemainingTime(prevTime => prevTime - 1);
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [remainingTime]);
-
-  const startTimer = (minutes) => {
-    setRemainingTime(minutes * 60); 
-  };
-
-  return (
-    <div className="Buttons">
-      <button className="button green" onClick={() => startTimer(20)}>Easy</button>
-      <button className="button blue" onClick={() => startTimer(15)}>Medium</button>
-      <button className="button red" onClick={() => startTimer(10)}>Hard</button>
-      <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
-      
   return (
     <div className="Header">
       <h1>Sudoku App</h1>
       <button className="toggle-theme">Mode</button>
     </div>
   );
+}
 
-
-function Buttons({ handleDifficultySelection, solveForMe, checkAnswer }) {
+function Buttons({ startTimer, handleDifficultySelection, solveForMe, remainingTime }) {
   return (
     <div className="AllButtons">
       <div className="Buttons">
-        <button className="button green" onClick={() => handleDifficultySelection("easy")}>Easy</button>
-        <button className="button blue" onClick={() => handleDifficultySelection("medium")}>Medium</button>
-        <button className="button red" onClick={() => handleDifficultySelection("hard")}>Hard</button>
+        <button className="button green" onClick={() => { startTimer(20); handleDifficultySelection("easy"); }}>Easy</button>
+        <button className="button blue" onClick={() => { startTimer(15); handleDifficultySelection("medium"); }}>Medium</button>
+        <button className="button red" onClick={() => { startTimer(15); handleDifficultySelection("hard"); }}>Hard</button>
       </div>
       <div className="Buttons">
         <button className="button" onClick={solveForMe}>Solve for Me</button>
       </div>
+      <div className="timer">Time remaining: {Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, '0')}</div>
     </div>
   );
 }
