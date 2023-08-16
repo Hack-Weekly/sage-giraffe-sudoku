@@ -10,7 +10,7 @@ on:
     branches: [ "feat-github-action" ]
 
 jobs:
-  build:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
     defaults:
@@ -31,4 +31,9 @@ jobs:
         cache: 'npm'
         cache-dependency-path: sudoku-app/package-lock.json
     - run: npm ci
-    - run: npm run deploy
+    - name: Deploy
+      run: |
+        git config --global user.email ${{ secrets.MY_EMAIL }}
+        git config --global user.name ${{ secrets.MY_NAME }}
+        git remote set-url origin https://${{ secrets.MY_NAME }}:${{ secrets.PERSON_ACCESS_TOKEN_FOR_PUSH_TO_GH_PAGES_BRANCH }}@github.com/Hack-Weekly/sage-giraffe-sudoku.git
+        npm run deploy
