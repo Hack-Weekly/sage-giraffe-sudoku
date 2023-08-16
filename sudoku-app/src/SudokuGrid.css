@@ -45,7 +45,7 @@
 
     .sudoku-cell {
         width: calc(100% / 9);
-        font-size: 2rem;
+        font-size: calc(1rem + 1.5vw);
     }
 
     .button {
